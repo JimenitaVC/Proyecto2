@@ -8,6 +8,6 @@ package datos;
  *
  * @author Admin
  */
-public class AlmaceBeneficios {
+public class AlmacenamientoBeneficios {
     
 }
