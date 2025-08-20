@@ -1,18 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logica;
 
-/**
- *
- * @author Admin
- */
 public class Carreras {
     private int idCarrera;
     private String nomCarrera;
-    private String grado;
-
+    private String grado; 
+    
+    public Carreras() {
+    }
+    
     public Carreras(int idCarrera, String nomCarrera, String grado) {
         this.idCarrera = idCarrera;
         this.nomCarrera = nomCarrera;
@@ -41,5 +36,10 @@ public class Carreras {
 
     public void setGrado(String grado) {
         this.grado = grado;
+    }
+
+    @Override
+    public String toString() {
+        return "Carreras{" + "idCarrera=" + idCarrera + ", nomCarrera=" + nomCarrera + ", grado=" + grado + '}';
     }
 }

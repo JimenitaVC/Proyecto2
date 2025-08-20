@@ -1,19 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logica;
 
 import java.util.Calendar;
-public class Persona {
-     private int cedula;
+
+public abstract class Persona {
+    private String cedula;
     private String nombre;
     private Calendar fechNac;
     private String direccion;
-    private int telefono;
+    private String telefono;
     private String email;
-
-    public Persona(int cedula, String nombre, Calendar fechNac, String direccion, int telefono, String email) {
+    
+    public Persona() {
+        this.fechNac = Calendar.getInstance();
+    }
+    
+    public Persona(String cedula, String nombre, Calendar fechNac, String direccion, String telefono, String email) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.fechNac = fechNac;
@@ -21,21 +22,12 @@ public class Persona {
         this.telefono = telefono;
         this.email = email;
     }
-    public Persona() {
-        this.cedula = 0;
-        this.nombre = "";
-        this.fechNac = null;
-        this.direccion = "";
-        this.telefono = 0;
-        this.email = "";
-        
-    }
 
-    public int getCedula() {
+    public String getCedula() {
         return cedula;
     }
 
-    public void setCedula(int cedula) {
+    public void setCedula(String cedula) {
         this.cedula = cedula;
     }
 
@@ -63,11 +55,11 @@ public class Persona {
         this.direccion = direccion;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
@@ -77,5 +69,10 @@ public class Persona {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Persona{" + "cedula=" + cedula + ", nombre=" + nombre + ", direccion=" + direccion + ", telefono=" + telefono + ", email=" + email + '}';
     }
 }

@@ -1,27 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logica;
 
-import java.math.BigDecimal;
 public class Beneficios {
-     private int idBeneficio;
+    private int idBeneficio;
     private String nomBeneficio;
     private String descripcion;
-    private BigDecimal montoBeneficio;
-
-    public Beneficios(int idBeneficio, String nomBeneficio, String descripcion, BigDecimal montoBeneficio) {
+    private double montoBeneficio;
+    
+    public Beneficios() {
+    }
+    
+    public Beneficios(int idBeneficio, String nomBeneficio, String descripcion, double montoBeneficio) {
         this.idBeneficio = idBeneficio;
         this.nomBeneficio = nomBeneficio;
         this.descripcion = descripcion;
         this.montoBeneficio = montoBeneficio;
-    }
-        public Beneficios() {
-        this.idBeneficio = 0;
-        this.nomBeneficio = "";
-        this.descripcion = "";
-        this.montoBeneficio = null;
     }
 
     public int getIdBeneficio() {
@@ -48,11 +40,17 @@ public class Beneficios {
         this.descripcion = descripcion;
     }
 
-    public BigDecimal getMontoBeneficio() {
+    public double getMontoBeneficio() {
         return montoBeneficio;
     }
 
-    public void setMontoBeneficio(BigDecimal montoBeneficio) {
+    public void setMontoBeneficio(double montoBeneficio) {
         this.montoBeneficio = montoBeneficio;
+    }
+
+    @Override
+    public String toString() {
+        return "Beneficios{" + "idBeneficio=" + idBeneficio + ", nomBeneficio=" + nomBeneficio + 
+               ", descripcion=" + descripcion + ", montoBeneficio=" + montoBeneficio + '}';
     }
 }

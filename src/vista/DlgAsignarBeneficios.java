@@ -1,8 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package vista;
+
+import datos.AlmacenamientoBeneficios;
+import datos.AlmacenamientoBeneficiosEstudiantes;
+import datos.AlmacenamientoEstudiante;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import logica.Beneficios;
+import logica.BeneficiosEstudiantes;
+import logica.Estudiante;
 
 /**
  *
@@ -10,12 +17,92 @@ package vista;
  */
 public class DlgAsignarBeneficios extends javax.swing.JDialog {
 
+    private ResultSet TablaBD;
+    private DefaultTableModel TablaJT;
+    private AlmacenamientoBeneficiosEstudiantes almacenamientoBeneficiosEstudiantes;
+    private AlmacenamientoEstudiante almacenamientoEstudiantes;
+    private AlmacenamientoBeneficios almacenamientoBeneficios;
+    private boolean modoEdicion = false;
+    private String cedulaOriginal = "";
+    private int idBeneficioOriginal = -1;
+
     /**
      * Creates new form DlgAsignarBeneficios
      */
     public DlgAsignarBeneficios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        almacenamientoBeneficiosEstudiantes = AlmacenamientoBeneficiosEstudiantes.getInstance();
+        almacenamientoEstudiantes = AlmacenamientoEstudiante.getInstance();
+        almacenamientoBeneficios = AlmacenamientoBeneficios.getInstance();
+        TablaJT = (DefaultTableModel) JtBeneficios.getModel();
+        cargarComboBoxes();
+        actualizarTabla();
+        configurarListenerTabla();
+        habilitarBotones(true, false);
+    }
+
+    private void cargarComboBoxes() {
+        cmbCedula_Estudiante.removeAllItems();
+        cmbId_Beneficio.removeAllItems();
+        cmbCedula_Estudiante.addItem("Seleccionar...");
+        cmbId_Beneficio.addItem("Seleccionar...");
+
+        for (Estudiante est : almacenamientoEstudiantes.obtenerTodos()) {
+            cmbCedula_Estudiante.addItem(est.getCedula());
+        }
+        for (Beneficios ben : almacenamientoBeneficios.obtenerTodos()) {
+            cmbId_Beneficio.addItem(ben.getIdBeneficio() + " - " + ben.getNomBeneficio());
+        }
+    }
+
+    private void actualizarTabla() {
+        mostrarEnTabla(almacenamientoBeneficiosEstudiantes.obtenerTodas());
+    }
+
+    private void mostrarEnTabla(ArrayList<BeneficiosEstudiantes> lista) {
+        TablaJT.setRowCount(0);
+        for (BeneficiosEstudiantes be : lista) {
+            TablaJT.addRow(new Object[]{
+                be.getCedula(),
+                be.getIdBeneficio()
+            });
+        }
+    }
+
+    private void limpiarCampos() {
+        cmbCedula_Estudiante.setSelectedIndex(0);
+        cmbId_Beneficio.setSelectedIndex(0);
+        cedulaOriginal = "";
+        idBeneficioOriginal = -1;
+        JtBeneficios.clearSelection();
+        habilitarBotones(true, false);
+    }
+
+    private void configurarListenerTabla() {
+        JtBeneficios.getSelectionModel().addListSelectionListener(e -> {
+            int fila = JtBeneficios.getSelectedRow();
+            if (fila != -1 && fila < TablaJT.getRowCount()) {
+                try {
+                    cedulaOriginal = TablaJT.getValueAt(fila, 0).toString();
+                    idBeneficioOriginal = Integer.parseInt(TablaJT.getValueAt(fila, 1).toString());
+                    cmbCedula_Estudiante.setSelectedItem(cedulaOriginal);
+                    Beneficios ben = almacenamientoBeneficios.buscarPorId(idBeneficioOriginal);
+                    if (ben != null) {
+                        cmbId_Beneficio.setSelectedItem(idBeneficioOriginal + " - " + ben.getNomBeneficio());
+                    }
+                    habilitarBotones(false, true);
+                } catch (Exception ex) {
+                    System.out.println("Error al cargar datos de la fila: " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void habilitarBotones(boolean insertar, boolean actualizarEliminar) {
+        btnInsertar.setEnabled(insertar);
+        btnActualizar.setEnabled(actualizarEliminar);
     }
 
     /**
@@ -27,148 +114,274 @@ public class DlgAsignarBeneficios extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
-        btnGuardar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        lblBuscar2 = new javax.swing.JLabel();
+        btnInsertar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        txtBusqueda = new javax.swing.JTextField();
+        lblCarnet2 = new javax.swing.JLabel();
+        lblMonto = new javax.swing.JLabel();
+        cmbCedula_Estudiante = new javax.swing.JComboBox<>();
+        cmbId_Beneficio = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        JtBeneficios = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel1.setText("Id:");
+        lblBuscar2.setText("Buscar:");
 
-        jLabel2.setText("Puesto:");
-
-        jLabel3.setText("Salario:");
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        btnInsertar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/insertar.png"))); // NOI18N
+        btnInsertar.setText("Insertar");
+        btnInsertar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                btnInsertarActionPerformed(evt);
             }
         });
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(115, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
-        );
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        btnGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/guardar.png"))); // NOI18N
-        btnGuardar.setText("Guardar");
-
-        btnCancelar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar.png"))); // NOI18N
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png"))); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+        txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyReleased(evt);
+            }
+        });
+
+        lblCarnet2.setText("Id_Beneficio");
+
+        lblMonto.setText("Cedula");
+
+        cmbCedula_Estudiante.setToolTipText("");
+
+        cmbId_Beneficio.setToolTipText("");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(btnInsertar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnActualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblBuscar2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7)
+                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(lblMonto)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cmbCedula_Estudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(lblCarnet2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmbId_Beneficio, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMonto)
+                    .addComponent(cmbCedula_Estudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbId_Beneficio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCarnet2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnInsertar)
+                    .addComponent(btnActualizar)
+                    .addComponent(btnEliminar)
+                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblBuscar2))
+                .addGap(25, 25, 25))
         );
+
+        JtBeneficios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Cedula_Estudiando", "Id_Beneficio"
+            }
+        ));
+        jScrollPane2.setViewportView(JtBeneficios);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21)))
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
+        try {
+            if (cmbCedula_Estudiante.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(this, "Seleccione un estudiante", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (cmbId_Beneficio.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(this, "Seleccione un beneficio", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+            String cedula = cmbCedula_Estudiante.getSelectedItem().toString();
+            String beneficioSeleccionado = cmbId_Beneficio.getSelectedItem().toString();
+            int idBeneficio = Integer.parseInt(beneficioSeleccionado.split(" - ")[0]);
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancelarActionPerformed
+            BeneficiosEstudiantes beneficioEstudiante = new BeneficiosEstudiantes(cedula, idBeneficio);
+
+            if (almacenamientoBeneficiosEstudiantes.insertar(beneficioEstudiante)) {
+                JOptionPane.showMessageDialog(this, "Beneficio asignado con éxito");
+                actualizarTabla();
+                limpiarCampos();
+            } else {
+                JOptionPane.showMessageDialog(this, "El beneficio ya está asignado a este estudiante", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al asignar beneficio: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnInsertarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        try {
+            if (cedulaOriginal.isEmpty() || idBeneficioOriginal == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un registro de la tabla para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (cmbCedula_Estudiante.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(this, "Seleccione un estudiante", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (cmbId_Beneficio.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(this, "Seleccione un beneficio", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            String nuevaCedula = cmbCedula_Estudiante.getSelectedItem().toString();
+            String beneficioSeleccionado = cmbId_Beneficio.getSelectedItem().toString();
+            int nuevoIdBeneficio = Integer.parseInt(beneficioSeleccionado.split(" - ")[0]);
+
+            BeneficiosEstudiantes beneficioEstudianteNuevo = new BeneficiosEstudiantes(nuevaCedula, nuevoIdBeneficio);
+
+            if (almacenamientoBeneficiosEstudiantes.modificar(cedulaOriginal, idBeneficioOriginal, beneficioEstudianteNuevo)) {
+                JOptionPane.showMessageDialog(this, "Asignación de beneficio actualizada con éxito");
+                actualizarTabla();
+                limpiarCampos();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo actualizar la asignación", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "ID de beneficio no es válido", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        try {
+            int fila = JtBeneficios.getSelectedRow();
+            if (fila == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un registro de la tabla para eliminar");
+                return;
+            }
+
+            String cedula = TablaJT.getValueAt(fila, 0).toString();
+            int idBeneficio = Integer.parseInt(TablaJT.getValueAt(fila, 1).toString());
+
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "¿Seguro que desea eliminar la asignación de beneficio?",
+                    "Confirmar",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                if (almacenamientoBeneficiosEstudiantes.eliminar(cedula, idBeneficio)) {
+                    JOptionPane.showMessageDialog(this, "Asignación de beneficio eliminada con éxito");
+                    actualizarTabla();
+                    limpiarCampos();
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se pudo eliminar la asignación", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
+        String datoBusqueda = txtBusqueda.getText().trim();
+
+        try {
+            TablaJT.setRowCount(0);
+            ArrayList<BeneficiosEstudiantes> resultadosBusqueda = new ArrayList<>();
+            if (datoBusqueda.isEmpty()) {
+                resultadosBusqueda = almacenamientoBeneficiosEstudiantes.obtenerTodas();
+            } else {
+                for (BeneficiosEstudiantes be : almacenamientoBeneficiosEstudiantes.obtenerTodas()) {
+                    if (be.getCedula().toLowerCase().contains(datoBusqueda.toLowerCase())) {
+                        resultadosBusqueda.add(be);
+                    }
+                }
+            }
+            for (BeneficiosEstudiantes be : resultadosBusqueda) {
+                TablaJT.addRow(new Object[]{
+                    be.getCedula(),
+                    be.getIdBeneficio()
+                });
+            }
+
+            JtBeneficios.revalidate();
+            JtBeneficios.repaint();
+
+        } catch (Exception ex) {
+            System.out.println("Error al realizar la búsqueda: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_txtBusquedaKeyReleased
 
     /**
      * @param args the command line arguments
@@ -213,15 +426,23 @@ public class DlgAsignarBeneficios extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnGuardar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTable JtBeneficios;
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnInsertar;
+    private javax.swing.JComboBox<String> cmbCedula_Estudiante;
+    private javax.swing.JComboBox<String> cmbId_Beneficio;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblBuscar2;
+    private javax.swing.JLabel lblCarnet2;
+    private javax.swing.JLabel lblMonto;
+    private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
+
+    private static class tblBeneficiosDisponibles {
+
+        public tblBeneficiosDisponibles() {
+        }
+    }
 }

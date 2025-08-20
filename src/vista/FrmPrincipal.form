@@ -110,39 +110,43 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                  <Component id="btnEstudiante" min="-2" pref="196" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="btnBeneficios" min="-2" pref="196" max="-2" attributes="0"/>
-                  <EmptySpace pref="33" max="32767" attributes="0"/>
-                  <Component id="btnCarreras" min="-2" pref="212" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
-                  <Component id="btnAsignarBene" min="-2" pref="219" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                  <Component id="btnPagos" min="-2" pref="224" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="btnCarreras" min="-2" pref="212" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="btnEstudiante" min="-2" pref="196" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnBeneficios" min="-2" pref="196" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="btnAsignarBene" min="-2" pref="219" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
+                          <Component id="btnPagos" min="-2" pref="224" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace pref="105" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="btnCarreras" pref="97" max="32767" attributes="0"/>
-                      <Component id="btnBeneficios" max="32767" attributes="0"/>
-                      <Component id="btnEstudiante" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="27" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnAsignarBene" min="-2" pref="95" max="-2" attributes="0"/>
-                      <Component id="btnPagos" max="32767" attributes="0"/>
+                      <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                          <Component id="btnEstudiante" alignment="3" pref="100" max="32767" attributes="0"/>
+                          <Component id="btnBeneficios" alignment="3" min="-2" pref="97" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="btnCarreras" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="66" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="btnPagos" pref="95" max="32767" attributes="0"/>
+                      <Component id="btnAsignarBene" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -158,6 +162,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Estudiante"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEstudianteActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnBeneficios">
           <Properties>
@@ -197,6 +204,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Asignar Beneficios"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAsignarBeneActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnPagos">
           <Properties>
@@ -208,6 +218,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de Pagos"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPagosActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

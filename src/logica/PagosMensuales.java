@@ -1,46 +1,49 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logica;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-public class PagosMensuales {
-    private int idPago;
-    private LocalDateTime fechCreacion;
-    private Month mes;
-    private LocalDate fechaPago;
-    private int cedula;
-    private BigDecimal totalBeneficios;
-    private BigDecimal deducSeguro;
-    private BigDecimal deducRenta;
-    private BigDecimal pagoNeto;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
-    public PagosMensuales(int idPago, LocalDateTime fechCreacion, Month mes, LocalDate fechaPago, int cedula, BigDecimal totalBeneficios, BigDecimal deducSeguro, BigDecimal deducRenta, BigDecimal pagoNeto) {
+public class PagosMensuales {
+
+    private int idPago;
+    private Calendar fechaCreacion;
+    private String mes;
+    private Calendar fechaPago;
+    private String estudiante;
+    private double totalBeneficio;
+    private double deduccionSeguro;
+    private double deduccionRenta;
+    private double pagoTotal;
+
+    public PagosMensuales() {
+        this.fechaCreacion = Calendar.getInstance();
+        this.fechaPago = Calendar.getInstance();
+    }
+
+    public PagosMensuales(int idPago, Calendar fechaCreacion, String mes, Calendar fechaPago,
+            String estudiante, double totalBeneficio) {
         this.idPago = idPago;
-        this.fechCreacion = fechCreacion;
+        this.fechaCreacion = fechaCreacion;
         this.mes = mes;
         this.fechaPago = fechaPago;
-        this.cedula = cedula;
-        this.totalBeneficios = totalBeneficios;
-        this.deducSeguro = deducSeguro;
-        this.deducRenta = deducRenta;
-        this.pagoNeto = pagoNeto;
+        this.estudiante = estudiante;
+        this.totalBeneficio = totalBeneficio;
+        calcularDeducciones();
     }
-        public PagosMensuales() {
-        this.idPago = 0;
-        this.fechCreacion = null;
-        this.mes = null;
-        this.fechaPago = null;
-        this.cedula = 0;
-        this.totalBeneficios = null;
-        this.deducSeguro = null;
-        this.deducRenta = null;
-        this.pagoNeto = null;
-        
+
+    public PagosMensuales(String mes, Calendar fechaPago, String estudiante, double totalBeneficio) {
+        this.fechaCreacion = Calendar.getInstance();
+        this.mes = mes;
+        this.fechaPago = fechaPago;
+        this.estudiante = estudiante;
+        this.totalBeneficio = totalBeneficio;
+        calcularDeducciones();
+    }
+
+    public void calcularDeducciones() {
+        this.deduccionSeguro = this.totalBeneficio * 0.10;
+        this.deduccionRenta = this.totalBeneficio * 0.05;
+        this.pagoTotal = this.totalBeneficio - (this.deduccionSeguro + this.deduccionRenta);
     }
 
     public int getIdPago() {
@@ -51,67 +54,98 @@ public class PagosMensuales {
         this.idPago = idPago;
     }
 
-    public LocalDateTime getFechCreacion() {
-        return fechCreacion;
+    public Calendar getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setFechCreacion(LocalDateTime fechCreacion) {
-        this.fechCreacion = fechCreacion;
+    public void setFechaCreacion(Calendar fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
-    public Month getMes() {
+    public String getMes() {
         return mes;
     }
 
-    public void setMes(Month mes) {
+    public void setMes(String mes) {
         this.mes = mes;
     }
 
-    public LocalDate getFechaPago() {
+    public Calendar getFechaPago() {
         return fechaPago;
     }
 
-    public void setFechaPago(LocalDate fechaPago) {
+    public void setFechaPago(Calendar fechaPago) {
         this.fechaPago = fechaPago;
     }
 
-    public int getCedula() {
-        return cedula;
+    public String getEstudiante() {
+        return estudiante;
     }
 
-    public void setCedula(int cedula) {
-        this.cedula = cedula;
+    public void setEstudiante(String estudiante) {
+        this.estudiante = estudiante;
     }
 
-    public BigDecimal getTotalBeneficios() {
-        return totalBeneficios;
+    public double getTotalBeneficio() {
+        return totalBeneficio;
     }
 
-    public void setTotalBeneficios(BigDecimal totalBeneficios) {
-        this.totalBeneficios = totalBeneficios;
+    public void setTotalBeneficio(double totalBeneficio) {
+        this.totalBeneficio = totalBeneficio;
+        calcularDeducciones();
     }
 
-    public BigDecimal getDeducSeguro() {
-        return deducSeguro;
+    public double getDeduccionSeguro() {
+        return deduccionSeguro;
     }
 
-    public void setDeducSeguro(BigDecimal deducSeguro) {
-        this.deducSeguro = deducSeguro;
+    public void setDeduccionSeguro(double deduccionSeguro) {
+        this.deduccionSeguro = deduccionSeguro;
     }
 
-    public BigDecimal getDeducRenta() {
-        return deducRenta;
+    public double getDeduccionRenta() {
+        return deduccionRenta;
     }
 
-    public void setDeducRenta(BigDecimal deducRenta) {
-        this.deducRenta = deducRenta;
+    public void setDeduccionRenta(double deduccionRenta) {
+        this.deduccionRenta = deduccionRenta;
     }
 
-    public BigDecimal getPagoNeto() {
-        return pagoNeto;
+    public double getPagoTotal() {
+        return pagoTotal;
     }
 
-    public void setPagoNeto(BigDecimal pagoNeto) {
-        this.pagoNeto = pagoNeto;
+    public void setPagoTotal(double pagoTotal) {
+        this.pagoTotal = pagoTotal;
+    }
+
+    @Deprecated
+    public double getPagoNeto() {
+        return getPagoTotal();
+    }
+
+    public String getFechaCreacionFormateada() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(fechaCreacion.getTime());
+    }
+
+    public String getFechaPagoFormateada() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(fechaPago.getTime());
+    }
+
+    @Override
+    public String toString() {
+        return "PagosMensuales{"
+                + "idPago=" + idPago
+                + ", fechaCreacion=" + getFechaCreacionFormateada()
+                + ", mes=" + mes
+                + ", fechaPago=" + getFechaPagoFormateada()
+                + ", estudiante=" + estudiante
+                + ", totalBeneficio=" + totalBeneficio
+                + ", deduccionSeguro=" + deduccionSeguro
+                + ", deduccionRenta=" + deduccionRenta
+                + ", pagoNeto=" + pagoTotal
+                + '}';
     }
 }

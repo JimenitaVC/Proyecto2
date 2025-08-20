@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package vista;
 
 /**
@@ -47,6 +43,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnEstudiante.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnEstudiante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconEstudiante.png"))); // NOI18N
         btnEstudiante.setText("Estudiante");
+        btnEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEstudianteActionPerformed(evt);
+            }
+        });
 
         btnBeneficios.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnBeneficios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconBeneficio.png"))); // NOI18N
@@ -69,43 +70,54 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnAsignarBene.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnAsignarBene.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconAsignarBeneficio.png"))); // NOI18N
         btnAsignarBene.setText("Asignar Beneficios");
+        btnAsignarBene.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignarBeneActionPerformed(evt);
+            }
+        });
 
         btnPagos.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnPagos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconPago.png"))); // NOI18N
         btnPagos.setText("Gestión de Pagos");
+        btnPagos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(btnEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(btnBeneficios, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addComponent(btnCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addComponent(btnAsignarBene, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addComponent(btnPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(54, 54, 54)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBeneficios, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnAsignarBene, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(105, 105, 105)
+                        .addComponent(btnPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnCarreras, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                    .addComponent(btnBeneficios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(54, 54, 54)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAsignarBene, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPagos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(66, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                        .addComponent(btnBeneficios, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCarreras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnPagos, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                    .addComponent(btnAsignarBene, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
         );
 
         mnuModulo.setText("Módulos");
@@ -161,15 +173,37 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void btnBeneficiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBeneficiosActionPerformed
         // TODO add your handling code here:
+        DlgBeneficios dialog = new DlgBeneficios((java.awt.Frame) this.getParent(), true);
+        dialog.setVisible(true);
     }//GEN-LAST:event_btnBeneficiosActionPerformed
 
     private void btnCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarrerasActionPerformed
         // TODO add your handling code here:
+        DlgCarrera dialog = new DlgCarrera((java.awt.Frame) this.getParent(), true);
+        dialog.setVisible(true);
     }//GEN-LAST:event_btnCarrerasActionPerformed
 
     private void mntCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mntCarrerasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_mntCarrerasActionPerformed
+
+    private void btnEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstudianteActionPerformed
+        // TODO add your handling code here:
+        DlgEstudiante dialog = new DlgEstudiante((java.awt.Frame) this.getParent(), true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_btnEstudianteActionPerformed
+
+    private void btnAsignarBeneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarBeneActionPerformed
+        // TODO add your handling code here:
+        DlgAsignarBeneficios dialog = new DlgAsignarBeneficios((java.awt.Frame) this.getParent(), true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_btnAsignarBeneActionPerformed
+
+    private void btnPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagosActionPerformed
+        // TODO add your handling code here:
+        DlgPagosMensuales dialog = new DlgPagosMensuales((java.awt.Frame) this.getParent(), true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_btnPagosActionPerformed
 
     /**
      * @param args the command line arguments

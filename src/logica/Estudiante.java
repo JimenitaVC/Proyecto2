@@ -1,27 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logica;
 
-import java.time.LocalDate;
-public class Estudiante {
-      private String carnet;
-    private LocalDate fechaIngreso;
-    private LocalDate fechaEgreso;
-    private int idCarrera;
+import java.util.Calendar;
 
-    public Estudiante(String carnet, LocalDate fechaIngreso, LocalDate fechaEgreso, int idCarrera) {
-        this.carnet = carnet;
-        this.fechaIngreso = fechaIngreso;
-        this.fechaEgreso = fechaEgreso;
-        this.idCarrera = idCarrera;
+public class Estudiante extends Persona {
+    private String carnet;
+    private Calendar fechIngreso;
+    private Calendar fechEgreso;
+    private int carrera; 
+    
+    public Estudiante() {
+        super();
+        this.fechIngreso = Calendar.getInstance();
+        this.fechEgreso = Calendar.getInstance();
     }
-        public Estudiante() {
-        this.carnet = "";
-        this.fechaIngreso = null;
-        this.fechaEgreso = null;
-        this.idCarrera = 0;
+    
+    public Estudiante(String carnet, Calendar fechIngreso, Calendar fechEgreso, int carrera, 
+                     String cedula, String nombre, Calendar fechNac, String direccion, 
+                     String telefono, String email) {
+        super(cedula, nombre, fechNac, direccion, telefono, email);
+        this.carnet = carnet;
+        this.fechIngreso = fechIngreso;
+        this.fechEgreso = fechEgreso;
+        this.carrera = carrera;
     }
 
     public String getCarnet() {
@@ -32,27 +32,33 @@ public class Estudiante {
         this.carnet = carnet;
     }
 
-    public LocalDate getFechaIngreso() {
-        return fechaIngreso;
+    public Calendar getFechIngreso() {
+        return fechIngreso;
     }
 
-    public void setFechaIngreso(LocalDate fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
+    public void setFechIngreso(Calendar fechIngreso) {
+        this.fechIngreso = fechIngreso;
     }
 
-    public LocalDate getFechaEgreso() {
-        return fechaEgreso;
+    public Calendar getFechEgreso() {
+        return fechEgreso;
     }
 
-    public void setFechaEgreso(LocalDate fechaEgreso) {
-        this.fechaEgreso = fechaEgreso;
+    public void setFechEgreso(Calendar fechEgreso) {
+        this.fechEgreso = fechEgreso;
     }
 
-    public int getIdCarrera() {
-        return idCarrera;
+    public int getCarrera() {
+        return carrera;
     }
 
-    public void setIdCarrera(int idCarrera) {
-        this.idCarrera = idCarrera;
+    public void setCarrera(int carrera) {
+        this.carrera = carrera;
+    }
+
+    @Override
+    public String toString() {
+        return "Estudiante{" + "carnet=" + carnet + ", cedula=" + getCedula() + 
+               ", nombre=" + getNombre() + ", carrera=" + carrera + '}';
     }
 }
