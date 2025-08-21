@@ -13,7 +13,9 @@ import logica.Estudiante;
 
 /**
  *
- * @author monse
+ * @author Jimena
+ * @author Monse
+ * @author Yerson
  */
 public class DlgAsignarBeneficios extends javax.swing.JDialog {
 
@@ -26,9 +28,14 @@ public class DlgAsignarBeneficios extends javax.swing.JDialog {
     private String cedulaOriginal = "";
     private int idBeneficioOriginal = -1;
 
+    
     /**
-     * Creates new form DlgAsignarBeneficios
+     * Constructor del diálogo.
+     *
+     * @param parent ventana padre
+     * @param modal indica si el diálogo es modal
      */
+
     public DlgAsignarBeneficios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -41,6 +48,11 @@ public class DlgAsignarBeneficios extends javax.swing.JDialog {
         configurarListenerTabla();
         habilitarBotones(true, false);
     }
+
+    
+    /**
+     * Carga los datos de estudiantes y beneficios en los ComboBoxes.
+     */
 
     private void cargarComboBoxes() {
         cmbCedula_Estudiante.removeAllItems();
@@ -56,9 +68,21 @@ public class DlgAsignarBeneficios extends javax.swing.JDialog {
         }
     }
 
+    
+    /**
+     * Actualiza la tabla con todas las asignaciones actuales.
+     */
+
     private void actualizarTabla() {
         mostrarEnTabla(almacenamientoBeneficiosEstudiantes.obtenerTodas());
     }
+
+    
+    /**
+     * Muestra una lista de asignaciones en la tabla.
+     *
+     * @param lista lista de asignaciones {@link BeneficiosEstudiantes}
+     */
 
     private void mostrarEnTabla(ArrayList<BeneficiosEstudiantes> lista) {
         TablaJT.setRowCount(0);
@@ -70,6 +94,12 @@ public class DlgAsignarBeneficios extends javax.swing.JDialog {
         }
     }
 
+    
+
+    /**
+     * Limpia los campos del formulario y restablece el estado de los botones.
+     */
+
     private void limpiarCampos() {
         cmbCedula_Estudiante.setSelectedIndex(0);
         cmbId_Beneficio.setSelectedIndex(0);
@@ -78,6 +108,12 @@ public class DlgAsignarBeneficios extends javax.swing.JDialog {
         JtBeneficios.clearSelection();
         habilitarBotones(true, false);
     }
+
+    
+    /**
+     * Configura el listener para detectar selección de filas en la tabla.
+     * Al seleccionar una fila, se cargan los datos en los ComboBoxes.
+     */
 
     private void configurarListenerTabla() {
         JtBeneficios.getSelectionModel().addListSelectionListener(e -> {
@@ -99,6 +135,14 @@ public class DlgAsignarBeneficios extends javax.swing.JDialog {
             }
         });
     }
+
+    
+    /**
+     * Habilita o deshabilita los botones de acción según el estado actual.
+     *
+     * @param insertar si el botón de insertar debe estar habilitado
+     * @param actualizarEliminar si los botones de actualizar y eliminar deben estar habilitados
+     */
 
     private void habilitarBotones(boolean insertar, boolean actualizarEliminar) {
         btnInsertar.setEnabled(insertar);
@@ -259,6 +303,13 @@ public class DlgAsignarBeneficios extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    /**
+     * Acción ejecutada al presionar el botón "Insertar".
+     * Valida la selección de estudiante y beneficio, crea una asignación y la guarda.
+     *
+     * @param evt evento de acción generado por el botón
+     */
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
         try {
             if (cmbCedula_Estudiante.getSelectedIndex() == 0) {
@@ -288,6 +339,13 @@ public class DlgAsignarBeneficios extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnInsertarActionPerformed
 
+    
+    /**
+     * Acción ejecutada al presionar el botón "Actualizar".
+     * Valida la selección y actualiza la asignación de beneficio a estudiante.
+     *
+     * @param evt evento de acción generado por el botón
+     */
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         try {
             if (cedulaOriginal.isEmpty() || idBeneficioOriginal == -1) {
@@ -323,6 +381,13 @@ public class DlgAsignarBeneficios extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
+    
+    /**
+     * Acción ejecutada al presionar el botón "Eliminar".
+     * Elimina la asignación seleccionada de la tabla tras confirmación del usuario.
+     *
+     * @param evt evento de acción generado por el botón
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
             int fila = JtBeneficios.getSelectedRow();
@@ -353,6 +418,13 @@ public class DlgAsignarBeneficios extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    
+    /**
+     * Acción ejecutada al liberar una tecla en el campo de búsqueda.
+     * Filtra las asignaciones mostradas en la tabla según la cédula ingresada.
+     *
+     * @param evt evento de teclado generado por el campo de búsqueda
+     */
     private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
         String datoBusqueda = txtBusqueda.getText().trim();
 
