@@ -9,7 +9,9 @@ import logica.Carreras;
 
 /**
  *
- * @author UTN
+ * @author Jimena
+ * @author Monse
+ * @author Yerson
  */
 public class DlgCarrera extends javax.swing.JDialog {
 
@@ -19,6 +21,13 @@ public class DlgCarrera extends javax.swing.JDialog {
     private boolean modoEdicion = false;
     private int idCarreraOriginal = -1;
 
+    
+    /**
+     * Constructor del diálogo.
+     *
+     * @param parent ventana padre
+     * @param modal indica si el diálogo es modal
+     */
     public DlgCarrera(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -30,6 +39,11 @@ public class DlgCarrera extends javax.swing.JDialog {
         habilitarBotones(true, false);
     }
 
+    
+    /**
+     * Configura el listener para detectar selección de filas en la tabla.
+     * Al seleccionar una fila, se cargan los datos en los campos del formulario.
+     */
     private void configurarListenerTabla() {
         JtCarrera.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             @Override
@@ -46,6 +60,12 @@ public class DlgCarrera extends javax.swing.JDialog {
         });
     }
 
+    
+    /**
+     * Carga los datos de una carrera seleccionada en los campos del formulario.
+     *
+     * @param fila índice de la fila seleccionada en la tabla
+     */
     private void cargarDatosEnCampos(int fila) {
         try {
             int idCarrera = (Integer) TablaJT.getValueAt(fila, 0);
@@ -67,12 +87,23 @@ public class DlgCarrera extends javax.swing.JDialog {
         }
     }
 
+    
+    /**
+     * Habilita o deshabilita los botones de acción según el estado actual.
+     *
+     * @param insertar si el botón de insertar debe estar habilitado
+     * @param actualizar si el botón de actualizar debe estar habilitado
+     */
     private void habilitarBotones(boolean insertar, boolean actualizar) {
         btnInsertar.setEnabled(insertar);
         btnActualizar.setEnabled(actualizar);
         txtId_carrera.setEnabled(false);
     }
 
+    
+    /**
+     * Limpia los campos del formulario y restablece el estado inicial.
+     */
     private void limpiarCampos() {
         txtNombre.setText("");
         cmbGrados.setSelectedIndex(-1);
@@ -84,6 +115,10 @@ public class DlgCarrera extends javax.swing.JDialog {
         JtCarrera.clearSelection();
     }
 
+    
+    /**
+     * Actualiza la tabla con todas las carreras almacenadas.
+     */
     private void actualizarTabla() {
         try {
             TablaJT.setRowCount(0);
@@ -351,6 +386,13 @@ public class DlgCarrera extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnInsertarActionPerformed
 
+    
+    /**
+     * Acción ejecutada al presionar el botón "Actualizar".
+     * Valida los campos del formulario y actualiza los datos de una carrera existente.
+     *
+     * @param evt evento de acción generado por el botón
+     */
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
         try {
@@ -395,6 +437,13 @@ public class DlgCarrera extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
+    
+    /**
+     * Acción ejecutada al presionar el botón "Eliminar".
+     * Elimina la carrera seleccionada en la tabla tras confirmación del usuario.
+     *
+     * @param evt evento de acción generado por el botón
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         try {
@@ -433,6 +482,13 @@ public class DlgCarrera extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    
+    /**
+     * Acción ejecutada al liberar una tecla en el campo de búsqueda.
+     * Filtra las carreras mostradas en la tabla por ID o nombre.
+     *
+     * @param evt evento de teclado generado por el campo de búsqueda
+     */
     private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
 
         String datoBusqueda = txtBusqueda.getText().trim();

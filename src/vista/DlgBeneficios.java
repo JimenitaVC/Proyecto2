@@ -9,7 +9,9 @@ import logica.Beneficios;
 
 /**
  *
- * @author monse
+ * @author Jimena
+ * @author Monse
+ * @author Yerson
  */
 public class DlgBeneficios extends javax.swing.JDialog {
 
@@ -19,8 +21,12 @@ public class DlgBeneficios extends javax.swing.JDialog {
     private boolean modoEdicion = false;
     private int idBeneficioOriginal = -1;
 
+    
     /**
-     * Creates new form DlgEstudiante
+     * Constructor del diálogo.
+     *
+     * @param parent ventana padre
+     * @param modal indica si el diálogo es modal
      */
     public DlgBeneficios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -33,10 +39,20 @@ public class DlgBeneficios extends javax.swing.JDialog {
         habilitarBotones(true, false);
     }
 
+    
+    /**
+     * Actualiza la tabla con todos los beneficios almacenados.
+     */
     private void actualizarTabla() {
         mostrarEnTabla(almacenamientoBeneficios.obtenerTodos());
     }
 
+    
+    /**
+     * Muestra una lista de beneficios en la tabla.
+     *
+     * @param lista lista de objetos {@link Beneficios}
+     */
     private void mostrarEnTabla(ArrayList<Beneficios> lista) {
         TablaJT.setRowCount(0);
         for (Beneficios b : lista) {
@@ -44,12 +60,21 @@ public class DlgBeneficios extends javax.swing.JDialog {
         }
     }
 
+    
+    /**
+     * Limpia los campos del formulario.
+     */
     private void limpiarCampos() {
         cmNombre_Beneficio.setSelectedIndex(0);
         txtDescripcion.setText("");
         cmbMonto.setSelectedIndex(0);
     }
 
+    
+    /**
+     * Configura el listener para detectar selección de filas en la tabla.
+     * Al seleccionar una fila, se cargan los datos en los campos del formulario.
+     */
     private void configurarListenerTabla() {
         JtBeneficios.getSelectionModel().addListSelectionListener(e -> {
             int fila = JtBeneficios.getSelectedRow();
@@ -64,6 +89,13 @@ public class DlgBeneficios extends javax.swing.JDialog {
         });
     }
 
+    
+    /**
+     * Habilita o deshabilita los botones de acción según el estado actual.
+     *
+     * @param insertar si el botón de insertar debe estar habilitado
+     * @param actualizarEliminar si los botones de actualizar y eliminar deben estar habilitados
+     */
     private void habilitarBotones(boolean insertar, boolean actualizarEliminar) {
         btnInsertar.setEnabled(insertar);
         btnActualizar.setEnabled(actualizarEliminar);
@@ -260,6 +292,12 @@ public class DlgBeneficios extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    /** Acción ejecutada al presionar el botón "Insertar".
+     * Valida los campos del formulario, crea un nuevo objeto {@link Beneficios} y lo inserta en el almacenamiento.
+     *
+     * @param evt evento de acción generado por el botón
+     */
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
         // TODO add your handling code here:
         try {
@@ -303,6 +341,13 @@ public class DlgBeneficios extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnInsertarActionPerformed
 
+    
+    /**
+     * Acción ejecutada al presionar el botón "Actualizar".
+     * Actualiza los datos de un beneficio existente seleccionado desde la tabla.
+     *
+     * @param evt evento de acción generado por el botón
+     */
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
         try {
@@ -347,6 +392,13 @@ public class DlgBeneficios extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
+    
+    /**
+     * Acción ejecutada al presionar el botón "Eliminar".
+     * Elimina el beneficio seleccionado en la tabla tras confirmación del usuario.
+     *
+     * @param evt evento de acción generado por el botón
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
             int fila = JtBeneficios.getSelectedRow();
@@ -373,6 +425,13 @@ public class DlgBeneficios extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    
+    /**
+     * Acción ejecutada al liberar una tecla en el campo de búsqueda.
+     * Filtra los beneficios mostrados en la tabla por ID o nombre.
+     *
+     * @param evt evento de teclado generado por el campo de búsqueda
+     */
     private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
         String datoBusqueda = txtBusqueda.getText().trim();
 
