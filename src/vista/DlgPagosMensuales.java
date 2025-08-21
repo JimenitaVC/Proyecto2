@@ -17,8 +17,13 @@ import javax.swing.table.DefaultTableModel;
 import logica.PagosMensuales;
 
 /**
- *
+ * Diálogo para la gestión de pagos mensuales de estudiantes.
+ * Permite registrar pagos, aplicar beneficios y generar reportes por mes.
+ * Se conecta con las clases de almacenamiento para obtener y mostrar datos.
+ * 
  * @author monse
+ * @author Jimena
+ * @author Yerson
  */
 public class DlgPagosMensuales extends javax.swing.JDialog {
 
@@ -34,6 +39,9 @@ public class DlgPagosMensuales extends javax.swing.JDialog {
 
     /**
      * Creates new form DlgPagosMensuales
+     * Constructor del diálogo. Inicializa componentes, carga datos y configura la interfaz.
+     * @param parent Ventana padre.
+     * @param modal Indica si el diálogo es modal.
      */
     public DlgPagosMensuales(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -56,6 +64,11 @@ public class DlgPagosMensuales extends javax.swing.JDialog {
 
         limpiarCampos();
     }
+    /**
+ * Configura los componentes visuales del formulario.
+ * Inicializa los combos de meses, beneficios y deducciones.
+ * Desactiva campos que no deben ser editables directamente.
+ */
 
     private void configurarComponentes() {
         cmbMeses.removeAllItems();
@@ -75,6 +88,10 @@ public class DlgPagosMensuales extends javax.swing.JDialog {
         cmbDeduccion_Menos5.setEnabled(false);
         txtTotal_Pagar.setEditable(false);
     }
+    /**
+ * Configura el combo box utilizado para generar reportes por mes.
+ * Carga los nombres de los meses en orden.
+ */
 
     private void configurarComboMesesReporte() {
         cmbMeses_reporte.removeAllItems();
@@ -85,11 +102,22 @@ public class DlgPagosMensuales extends javax.swing.JDialog {
             cmbMeses_reporte.addItem(mes);
         }
     }
+    /**
+ * Habilita o deshabilita los botones según el modo de operación.
+ * También desactiva la edición del campo de ID de pago.
+ *
+ * @param insertar true para habilitar el modo de inserción.
+ * @param actualizar true para habilitar el modo de actualización.
+ */
 
     private void habilitarBotones(boolean insertar, boolean actualizar) {
         txtId_Pago.setEditable(false);
         txtId_Pago.setFocusable(false);
     }
+    /**
+ * Carga las cédulas de estudiantes en el combo box.
+ * También configura los listeners para cargar beneficios y calcular el total automáticamente.
+ */
 
     private void cargarComboBoxes() {
         cmbCedula_Estudiante.removeAllItems();
@@ -101,6 +129,11 @@ public class DlgPagosMensuales extends javax.swing.JDialog {
         cmbCedula_Estudiante.addActionListener(e -> cargarBeneficiosDelEstudiante());
         cmbMonto_Beneficio_Estudiante.addActionListener(e -> calcularTotal());
     }
+    /**
+ * Carga los beneficios asignados al estudiante seleccionado en el combo box.
+ * Si el estudiante no tiene beneficios, se muestra un mensaje indicativo.
+ * Si ocurre un error, se muestra un mensaje de error en consola y en el combo.
+ */
 
     private void cargarBeneficiosDelEstudiante() {
         cmbMonto_Beneficio_Estudiante.removeAllItems();
@@ -134,10 +167,20 @@ public class DlgPagosMensuales extends javax.swing.JDialog {
             System.out.println("Error al cargar beneficios: " + ex.getMessage());
         }
     }
+    /**
+ * Actualiza la tabla de pagos mensuales con todos los registros disponibles.
+ * Utiliza el método mostrarEnTabla para renderizar los datos.
+ */
 
     private void actualizarTabla() {
         mostrarEnTabla(almacenamientoPagosMensuales.obtenerTodos());
     }
+    /**
+ * Muestra una lista de pagos mensuales en la tabla.
+ * Formatea los montos con separadores de miles y dos decimales.
+ *
+ * @param lista Lista de objetos PagosMensuales a mostrar.
+ */
 
     private void mostrarEnTabla(ArrayList<PagosMensuales> lista) {
         TablaJT.setRowCount(0);
@@ -155,6 +198,11 @@ public class DlgPagosMensuales extends javax.swing.JDialog {
             });
         }
     }
+    /**
+ * Limpia todos los campos del formulario y prepara el siguiente ID de pago.
+ * Restablece los combos, fechas y campos de texto a su estado inicial.
+ * También desactiva el modo edición y limpia la selección de la tabla.
+ */
 
     private void limpiarCampos() {
         int siguienteId = 1;
@@ -177,6 +225,11 @@ public class DlgPagosMensuales extends javax.swing.JDialog {
         JtPagos.clearSelection();
         habilitarBotones(true, false);
     }
+    /**
+ * Configura el listener para detectar la selección de una fila en la tabla de pagos.
+ * Al seleccionar una fila, se carga el pago correspondiente en el formulario.
+ * También se habilita el botón de actualización.
+ */
 
     private void configurarListenerTabla() {
         JtPagos.getSelectionModel().addListSelectionListener(e -> {
@@ -196,6 +249,12 @@ public class DlgPagosMensuales extends javax.swing.JDialog {
             }
         });
     }
+    /**
+ * Carga los datos de un objeto PagosMensuales en el formulario.
+ * Asigna valores a los campos de texto, combos y fecha según el pago seleccionado.
+ *
+ * @param pago Objeto PagosMensuales con los datos a mostrar.
+ */
 
     private void cargarDatosEnFormulario(PagosMensuales pago) {
         txtId_Pago.setText(String.valueOf(pago.getIdPago()));
@@ -227,6 +286,14 @@ public class DlgPagosMensuales extends javax.swing.JDialog {
         txtTotal_Pagar.setText(formatoMoneda.format(pago.getPagoTotal()));
         idPagoOriginal = pago.getIdPago();
     }
+    /**
+ * Busca el nombre del beneficio asignado a un estudiante según el monto recibido.
+ * Compara el monto con los beneficios registrados para la cédula indicada.
+ *
+ * @param monto Monto del beneficio aplicado.
+ * @param cedula Cédula del estudiante.
+ * @return Nombre del beneficio si se encuentra, o cadena vacía si no hay coincidencia.
+ */
 
     private String obtenerNombreBeneficioPorMonto(double monto, String cedula) {
         try {
@@ -243,6 +310,12 @@ public class DlgPagosMensuales extends javax.swing.JDialog {
         }
         return "";
     }
+    /**
+ * Calcula el total a pagar aplicando deducciones al beneficio seleccionado.
+ * Se descuentan el 10% por seguro y el 5% por renta del monto del beneficio.
+ * Si no hay beneficio válido seleccionado, se muestra "0.00" como total.
+ * En caso de error, también se muestra "0.00" y se imprime el mensaje en consola.
+ */
 
     private void calcularTotal() {
         try {
@@ -600,6 +673,14 @@ public class DlgPagosMensuales extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    /**
+ * Acción del botón "Guardar".
+ * Valida los campos del formulario y registra un nuevo pago mensual.
+ * Verifica que no exista un pago duplicado para el mismo estudiante en el mismo mes/año.
+ * Muestra mensajes de éxito o error según el resultado.
+ *
+ * @param evt Evento de acción generado por el botón.
+ */
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling xcode here:
@@ -652,6 +733,13 @@ public class DlgPagosMensuales extends javax.swing.JDialog {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
+    /**
+ * Evento que se dispara al liberar una tecla en el campo de búsqueda.
+ * Filtra los pagos mensuales por cédula del estudiante, mes o año de la fecha de pago.
+ * Si el campo está vacío, se muestran todos los pagos.
+ *
+ * @param evt Evento de teclado generado por el campo de búsqueda.
+ */
 
     private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
         String datoBusqueda = txtBusqueda.getText().trim().toLowerCase(); 
@@ -688,6 +776,14 @@ public class DlgPagosMensuales extends javax.swing.JDialog {
 
         mostrarEnTabla(resultados);
     }//GEN-LAST:event_txtBusquedaKeyReleased
+    /**
+ * Acción del botón "Generar".
+ * Valida el año y el mes seleccionados, y genera un reporte con los pagos mensuales realizados.
+ * Calcula totales de beneficios, deducciones y pagos netos.
+ * Muestra un resumen en un cuadro de diálogo o un mensaje si no hay resultados.
+ *
+ * @param evt Evento de acción generado por el botón.
+ */
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         try {
@@ -764,7 +860,7 @@ public class DlgPagosMensuales extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_btnGenerarActionPerformed
-
+    
     private void cmbMeses_reporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMeses_reporteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbMeses_reporteActionPerformed

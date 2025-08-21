@@ -26,7 +26,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane2" pref="708" max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" max="32767" attributes="0"/>
                   <Component id="jPanel1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -103,21 +103,10 @@
                           </Group>
                           <EmptySpace min="-2" pref="186" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="lblCarrera" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="221" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="lblFechaEgreso" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="221" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="lblCarnet" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblFechaIngreso" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="221" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="lblCarrera" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblFechaEgreso" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblCarnet" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblFechaIngreso" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" attributes="0">
@@ -128,9 +117,9 @@
                           <Component id="btnActualizar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

@@ -12,8 +12,13 @@ import logica.Carreras;
 import logica.Estudiante;
 
 /**
- *
+ * Diálogo para la gestión de estudiantes.
+ * Permite insertar, actualizar y visualizar estudiantes junto con su información académica.
+ * Se conecta con las clases de almacenamiento para obtener y mostrar datos.
+ * 
  * @author monse
+ * @author Jimena
+ * @author Yerson
  */
 public class DlgEstudiante extends javax.swing.JDialog {
 
@@ -26,6 +31,9 @@ public class DlgEstudiante extends javax.swing.JDialog {
 
     /**
      * Creates new form DlgEstudiante
+     * Constructor del diálogo. Inicializa componentes y carga datos necesarios.
+     * @param parent Ventana padre.
+     * @param modal Indica si el diálogo es modal.
      */
     public DlgEstudiante(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -39,6 +47,10 @@ public class DlgEstudiante extends javax.swing.JDialog {
         configurarListenerTabla();
         habilitarBotones(true, false);
     }
+     /**
+     * Carga las carreras disponibles en el combo box.
+     * Muestra un mensaje de error si ocurre alguna excepción.
+     */
 
     private void cargarCarrerasEnCombo() {
         try {
@@ -55,6 +67,10 @@ public class DlgEstudiante extends javax.swing.JDialog {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    /**
+     * Configura el listener para detectar selección de filas en la tabla.
+     * Al seleccionar una fila, se cargan los datos en los campos del formulario.
+     */
 
     private void configurarListenerTabla() {
         JtEstudiantes.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -71,6 +87,11 @@ public class DlgEstudiante extends javax.swing.JDialog {
             }
         });
     }
+     /**
+     * Carga los datos del estudiante seleccionado en los campos del formulario.
+     *
+     * @param fila Índice de la fila seleccionada en la tabla.
+     */
 
     private void cargarDatosEnCampos(int fila) {
         try {
@@ -116,12 +137,21 @@ public class DlgEstudiante extends javax.swing.JDialog {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+       /**
+     * Habilita o deshabilita los botones de insertar y actualizar.
+     *
+     * @param insertar true para habilitar el botón de insertar.
+     * @param actualizar true para habilitar el botón de actualizar.
+     */
 
     private void habilitarBotones(boolean insertar, boolean actualizar) {
         btnInsertar.setEnabled(insertar);
         btnActualizar.setEnabled(actualizar);
         txtCedula.setEnabled(insertar);
     }
+    /**
+     * Limpia todos los campos del formulario y reinicia el estado de edición.
+     */
 
     private void limpiarCampos() {
         txtCedula.setText("");
@@ -144,6 +174,11 @@ public class DlgEstudiante extends javax.swing.JDialog {
         habilitarBotones(true, false);
         JtEstudiantes.clearSelection();
     }
+    /**
+     * Agrega una fila a la tabla con los datos del estudiante.
+     *
+     * @param estudiante Objeto Estudiante con los datos a mostrar.
+     */
 
     private void agregarFilaEstudiante(Estudiante estudiante) {
         Object[] fila = new Object[10];
@@ -164,6 +199,11 @@ public class DlgEstudiante extends javax.swing.JDialog {
 
         TablaJT.addRow(fila);
     }
+    /**
+ * Actualiza la tabla de estudiantes con los datos almacenados.
+ * Limpia la tabla actual y recarga todas las filas desde el almacenamiento.
+ * Muestra mensaje de error si ocurre alguna excepción.
+ */
 
     private void actualizarTabla() {
         try {
@@ -202,6 +242,12 @@ public class DlgEstudiante extends javax.swing.JDialog {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    /**
+ * Valida los campos obligatorios del formulario antes de insertar o actualizar.
+ * Verifica que no estén vacíos y que el formato del email sea válido.
+ *
+ * @return true si todos los campos son válidos, false en caso contrario.
+ */
 
     private boolean validarCampos() {
         if (txtCedula.getText().trim().isEmpty()) {
@@ -256,6 +302,13 @@ public class DlgEstudiante extends javax.swing.JDialog {
 
         return true;
     }
+    /**
+ * Extrae el ID de carrera desde el texto seleccionado en el combo box.
+ * El formato esperado es "ID - NombreCarrera".
+ *
+ * @param itemCombo Texto del ítem seleccionado en el combo.
+ * @return ID de la carrera como entero, o -1 si no se puede extraer.
+ */
 
     private int extraerIdCarrera(String itemCombo) {
         try {
@@ -518,6 +571,13 @@ public class DlgEstudiante extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    /**
+ * Acción del botón "Actualizar".
+ * Verifica si hay un estudiante seleccionado y si los campos son válidos.
+ * Luego actualiza los datos del estudiante en el almacenamiento.
+ *
+ * @param evt Evento de acción generado por el botón.
+ */
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
@@ -578,6 +638,13 @@ public class DlgEstudiante extends javax.swing.JDialog {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
+    /**
+ * Acción del botón "Eliminar".
+ * Verifica si hay un estudiante seleccionado y solicita confirmación.
+ * Si el usuario acepta, elimina el estudiante del almacenamiento.
+ *
+ * @param evt Evento de acción generado por el botón.
+ */
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
@@ -616,6 +683,13 @@ public class DlgEstudiante extends javax.swing.JDialog {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+    /**
+ * Acción del botón "Insertar".
+ * Valida los campos del formulario y crea un nuevo estudiante.
+ * Si la cédula o el carnet ya existen, muestra un mensaje de error.
+ *
+ * @param evt Evento de acción generado por el botón.
+ */
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
         // TODO add your handling code here:
@@ -670,6 +744,12 @@ public class DlgEstudiante extends javax.swing.JDialog {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnInsertarActionPerformed
+    /**
+ * Evento que se dispara al liberar una tecla en el campo de búsqueda.
+ * Busca estudiantes por cédula, carnet o nombre y actualiza la tabla con los resultados.
+ *
+ * @param evt Evento de teclado generado por el campo de búsqueda.
+ */
 
     private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
 
@@ -715,6 +795,12 @@ public class DlgEstudiante extends javax.swing.JDialog {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_txtBusquedaKeyReleased
+    /**
+ * Acción del campo de texto "Nombre".
+ * Actualmente no realiza ninguna acción.
+ *
+ * @param evt Evento de acción generado por el campo de texto.
+ */
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:

@@ -1,13 +1,22 @@
 package vista;
 
 /**
- *
+ * Ventana principal de la aplicación.
+ * Sirve como contenedor inicial desde donde se puede acceder a los distintos módulos del sistema.
+ * Generalmente incluye menús, botones o accesos a diálogos como estudiantes, pagos, beneficios, etc.
+ * 
  * @author monse
+ * @author Jimena
+ * @author Yerson
  */
+
+
 public class FrmPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmPrincipal
+     * Constructor de la ventana principal.
+     * Inicializa los componentes gráficos definidos en el formulario
      */
     public FrmPrincipal() {
         initComponents();
