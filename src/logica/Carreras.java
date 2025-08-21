@@ -8,7 +8,7 @@ package logica;
  * 
  * @author Jimena
  * @author Monse
- * @Yerson
+ * @author Yerson
  */
 
 public class Carreras {
