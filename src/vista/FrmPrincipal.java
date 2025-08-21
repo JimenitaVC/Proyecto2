@@ -35,6 +35,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mntCarreras = new javax.swing.JMenuItem();
         mntAsignarBene = new javax.swing.JMenuItem();
         mntGestionPago = new javax.swing.JMenuItem();
+        mnuAcerca = new javax.swing.JMenu();
+        mntAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,15 +95,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addGap(54, 54, 54)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(btnAsignarBene, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(72, 72, 72)
+                        .addComponent(btnPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnBeneficios, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAsignarBene, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(105, 105, 105)
-                        .addComponent(btnPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnBeneficios, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(105, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -114,9 +117,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
                         .addComponent(btnBeneficios, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnCarreras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnPagos, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-                    .addComponent(btnAsignarBene, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAsignarBene, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39))
         );
 
@@ -148,6 +151,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuModulo.add(mntGestionPago);
 
         jMenuBar1.add(mnuModulo);
+
+        mnuAcerca.setText("Acerca de");
+
+        mntAbout.setText("About");
+        mntAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mntAboutActionPerformed(evt);
+            }
+        });
+        mnuAcerca.add(mntAbout);
+
+        jMenuBar1.add(mnuAcerca);
 
         setJMenuBar(jMenuBar1);
 
@@ -205,6 +220,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         dialog.setVisible(true);
     }//GEN-LAST:event_btnPagosActionPerformed
 
+    private void mntAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mntAboutActionPerformed
+        DlgAbout aboutDialog = new DlgAbout(this, true);
+        aboutDialog.setLocationRelativeTo(this);
+        aboutDialog.setVisible(true);
+    }//GEN-LAST:event_mntAboutActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -248,11 +269,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnPagos;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuItem mntAbout;
     private javax.swing.JMenuItem mntAsignarBene;
     private javax.swing.JMenuItem mntBeneficios;
     private javax.swing.JMenuItem mntCarreras;
     private javax.swing.JMenuItem mntEstudiante;
     private javax.swing.JMenuItem mntGestionPago;
+    private javax.swing.JMenu mnuAcerca;
     private javax.swing.JMenu mnuModulo;
     // End of variables declaration//GEN-END:variables
 }

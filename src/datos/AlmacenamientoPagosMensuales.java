@@ -9,9 +9,21 @@ public class AlmacenamientoPagosMensuales {
     private ArrayList<PagosMensuales> listaPagosMensuales;
     private static AlmacenamientoPagosMensuales instancia;
 
+    
+    /**
+     * Constructor privado AlmacenamientoPagosMensuales
+     */
+
     private AlmacenamientoPagosMensuales() {
         this.listaPagosMensuales = new ArrayList<>();
     }
+
+    
+    /**
+     * Obtiene la instancia única de {@code AlmacenamientoPagosMensuales}.
+     *
+     * @return instancia única
+     */
 
     public static synchronized AlmacenamientoPagosMensuales getInstance() {
         if (instancia == null) {
@@ -19,6 +31,14 @@ public class AlmacenamientoPagosMensuales {
         }
         return instancia;
     }
+
+    
+    /**
+     * Inserta un nuevo pago mensual si no existe uno para el mismo estudiante, mes y año.
+     *
+     * @param pago el pago a insertar
+     * @return {@code true} si se insertó correctamente, {@code false} si ya existe o ocurrió un error
+     */
 
     public boolean insertar(PagosMensuales pago) {
         try {
@@ -34,6 +54,15 @@ public class AlmacenamientoPagosMensuales {
             return false;
         }
     }
+
+    
+    /**
+     * Modifica un pago mensual existente.
+     *
+     * @param idPago ID del pago a modificar
+     * @param pagoModificado objeto {@code PagosMensuales} con los nuevos datos
+     * @return {@code true} si se modificó correctamente, {@code false} si no se encontró o ocurrió un error
+     */
 
     public boolean modificar(int idPago, PagosMensuales pagoModificado) {
         try {
@@ -68,6 +97,14 @@ public class AlmacenamientoPagosMensuales {
         }
     }
 
+    
+    /**
+     * Elimina un pago mensual por su ID.
+     *
+     * @param idPago ID del pago a eliminar
+     * @return {@code true} si se eliminó correctamente, {@code false} si no se encontró o ocurrió un error
+     */
+
     public boolean eliminar(int idPago) {
         try {
             PagosMensuales pago = buscarPorId(idPago);
@@ -80,6 +117,14 @@ public class AlmacenamientoPagosMensuales {
         }
     }
 
+    
+    /**
+     * Busca un pago mensual por su ID.
+     *
+     * @param idPago ID del pago
+     * @return el pago encontrado o {@code null} si no existe
+     */
+
     public PagosMensuales buscarPorId(int idPago) {
         for (PagosMensuales pago : listaPagosMensuales) {
             if (pago.getIdPago() == idPago) {
@@ -88,6 +133,14 @@ public class AlmacenamientoPagosMensuales {
         }
         return null;
     }
+
+    
+    /**
+     * Busca pagos realizados por un estudiante según su cédula.
+     *
+     * @param cedula cédula del estudiante
+     * @return lista de pagos encontrados
+     */
 
     public ArrayList<PagosMensuales> buscarPorEstudiante(String cedula) {
         ArrayList<PagosMensuales> resultado = new ArrayList<>();
@@ -98,6 +151,15 @@ public class AlmacenamientoPagosMensuales {
         }
         return resultado;
     }
+
+    
+    /**
+     * Busca pagos por mes y año.
+     *
+     * @param mes nombre del mes
+     * @param año año del pago
+     * @return lista de pagos encontrados
+     */
 
     public ArrayList<PagosMensuales> buscarPorMesYAño(String mes, int año) {
         ArrayList<PagosMensuales> resultado = new ArrayList<>();
@@ -110,6 +172,14 @@ public class AlmacenamientoPagosMensuales {
         return resultado;
     }
 
+    
+    /**
+     * Busca pagos por nombre del mes.
+     *
+     * @param mes nombre del mes
+     * @return lista de pagos encontrados
+     */
+
     public ArrayList<PagosMensuales> buscarPorMes(String mes) {
         ArrayList<PagosMensuales> resultado = new ArrayList<>();
         for (PagosMensuales pago : listaPagosMensuales) {
@@ -119,6 +189,16 @@ public class AlmacenamientoPagosMensuales {
         }
         return resultado;
     }
+
+    
+    /**
+     * Verifica si existe un pago para un estudiante en un mes y año específicos.
+     *
+     * @param cedula cédula del estudiante
+     * @param mes nombre del mes
+     * @param año año del pago
+     * @return {@code true} si existe, {@code false} si no
+     */
 
     public boolean existePagoEstudianteMesAño(String cedula, String mes, int año) {
         for (PagosMensuales pago : listaPagosMensuales) {
@@ -131,9 +211,26 @@ public class AlmacenamientoPagosMensuales {
         return false;
     }
 
+    
+    /**
+     * Obtiene todos los pagos mensuales almacenados.
+     *
+     * @return lista de pagos
+     */
+
     public ArrayList<PagosMensuales> obtenerTodos() {
         return new ArrayList<>(listaPagosMensuales);
     }
+
+    
+    /**
+     * Filtra pagos según cédula, mes y año.
+     *
+     * @param cedula cédula del estudiante
+     * @param mes nombre del mes
+     * @param año año del pago
+     * @return lista de pagos que cumplen con los filtros
+     */
 
     public ArrayList<PagosMensuales> filtrarPagos(String cedula, String mes, Integer año) {
         ArrayList<PagosMensuales> resultado = new ArrayList<>();
@@ -165,6 +262,15 @@ public class AlmacenamientoPagosMensuales {
         return resultado;
     }
 
+    
+    /**
+     * Calcula el total pagado en un mes y año específicos.
+     *
+     * @param mes nombre del mes
+     * @param año año del pago
+     * @return monto total pagado
+     */
+
     public double calcularTotalPagadoMesAño(String mes, int año) {
         double total = 0.0;
         ArrayList<PagosMensuales> pagosMes = buscarPorMesYAño(mes, año);
@@ -174,6 +280,13 @@ public class AlmacenamientoPagosMensuales {
         return total;
     }
 
+    
+    /**
+     * Calcula el total de beneficios aplicados en todos los pagos.
+     *
+     * @return monto total de beneficios
+     */
+
     public double calcularTotalBeneficios() {
         double total = 0.0;
         for (PagosMensuales pago : listaPagosMensuales) {
@@ -181,6 +294,13 @@ public class AlmacenamientoPagosMensuales {
         }
         return total;
     }
+
+    
+    /**
+     * Calcula el total de deducciones por seguro en todos los pagos.
+     *
+     * @return monto total de deducciones por seguro
+     */
 
     public double calcularTotalDeduccionesSeguro() {
         double total = 0.0;
@@ -190,6 +310,13 @@ public class AlmacenamientoPagosMensuales {
         return total;
     }
 
+    
+    /**
+     * Calcula el total de deducciones por renta en todos los pagos.
+     *
+     * @return monto total de deducciones por renta
+     */
+
     public double calcularTotalDeduccionesRenta() {
         double total = 0.0;
         for (PagosMensuales pago : listaPagosMensuales) {
@@ -198,9 +325,23 @@ public class AlmacenamientoPagosMensuales {
         return total;
     }
 
+    
+    /**
+     * Obtiene el número total de pagos almacenados.
+     *
+     * @return cantidad de pagos
+     */
+
     public int obtenerTamaño() {
         return listaPagosMensuales.size();
     }
+
+    
+    /**
+     * Obtiene el siguiente ID disponible para un nuevo pago.
+     *
+     * @return siguiente ID disponible
+     */
 
     public int obtenerSiguienteId() {
         int maxId = 0;
@@ -212,6 +353,14 @@ public class AlmacenamientoPagosMensuales {
         return maxId + 1;
     }
 
+    
+    /**
+     * Elimina todos los pagos realizados por un estudiante.
+     *
+     * @param cedula cédula del estudiante
+     * @return {@code true} si se eliminaron correctamente, {@code false} si ocurrió un error
+     */
+
     public boolean eliminarPagosDeEstudiante(String cedula) {
         try {
             listaPagosMensuales.removeIf(pago -> pago.getEstudiante().equals(cedula));
@@ -220,6 +369,11 @@ public class AlmacenamientoPagosMensuales {
             return false;
         }
     }
+
+    
+    /**
+     * Elimina todos los pagos almacenados.
+     */
 
     public void limpiarTodos() {
         listaPagosMensuales.clear();
